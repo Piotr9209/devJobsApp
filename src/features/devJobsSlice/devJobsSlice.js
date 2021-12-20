@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { url } from "./baseUrl";
+import { baseUrl } from "./baseUrl";
 
 const initialState = {
   devJobs: [],
@@ -14,8 +14,8 @@ const checkForError = (response) => {
 
 export const getDevJobs = createAsyncThunk(
   "devjobs/getDevjobs",
-  async (url) => {
-    return await fetch(url)
+  async (baseUrl) => {
+    return await fetch(baseUrl)
       .then(checkForError)
       .then((data) => {
         return data;
