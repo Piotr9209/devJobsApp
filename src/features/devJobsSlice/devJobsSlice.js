@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { url } from "./baseUrl";
 
 const initialState = {
   devJobs: [],
