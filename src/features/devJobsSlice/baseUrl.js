@@ -1,1 +1,1 @@
-export const url = "http://localhost:8000/job";
+export const urlFetch = "http://localhost:8000/job";

@@ -7,7 +7,7 @@ const initialState = {
   failed: false,
 };
 
-const checkForError = (response) => {
+const checkError = (response) => {
   if (!response.ok) throw Error("ERROR" + response.statusText);
   return response.json();
 };
@@ -16,7 +16,7 @@ export const getDevJobs = createAsyncThunk(
   "devjobs/getDevjobs",
   async (url) => {
     return await fetch(url)
-      .then(checkForError)
+      .then(checkError)
       .then((data) => {
         return data;
       })
