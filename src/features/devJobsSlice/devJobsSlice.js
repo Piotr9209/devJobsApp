@@ -21,7 +21,6 @@ export const getDevJobs = createAsyncThunk(
       })
       .catch((error) => {
         console.error("FETCH_ERR: ", error);
-        // state.failed = true;
       });
   }
 );
