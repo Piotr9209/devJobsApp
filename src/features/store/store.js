@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { devJobsSlice } from "../devjobsSlice/devjobsSlice";
+import { devJobsSlice } from "../devJobsSlice/devJobsSlice";
 
 const store = configureStore({
   reducer: {
