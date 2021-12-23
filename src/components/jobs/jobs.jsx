@@ -12,6 +12,6 @@ export const Jobs = () => {
     dispatch(getDevJobs());
   }, [dispatch]);
 
-  console.log(success && devJobs);
+  console.log(success && devJobs.slice(0, 10));
   return <div>dupa dupa</div>;
 };
