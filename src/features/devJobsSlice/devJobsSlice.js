@@ -4,7 +4,7 @@ const initialState = {
   devJobs: [],
   loading: true,
   failed: false,
-  success: false,
+  success: "",
 };
 
 const url = "http://localhost:8000/job/";
