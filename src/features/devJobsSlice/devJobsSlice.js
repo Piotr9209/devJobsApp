@@ -2,20 +2,21 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   devJobs: [],
+  devJob: [],
   loading: true,
   failed: false,
   success: "loading",
 };
 
-const url = "http://localhost:8000/job/";
+const url = "http://localhost:8000/job/?";
 
 const checkForError = (response) => {
   if (!response.ok) throw Error("ERROR" + response.statusText);
   return response.json();
 };
 
-export const getDevJobs = createAsyncThunk("devjobs/getDevjobs", async () => {
-  return await fetch(url)
+export const getDevJobs = createAsyncThunk("devjobs/getDevjobs", async (id) => {
+  return await fetch(url + id)
     .then(checkForError)
     .then((data) => {
       return data;
@@ -28,7 +29,11 @@ export const getDevJobs = createAsyncThunk("devjobs/getDevjobs", async () => {
 export const devJobsSlice = createSlice({
   name: "devJobsSelected",
   initialState,
-  reducers: {},
+  reducers: {
+    setLimit: (state, action) => {
+      state.limit = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getDevJobs.pending, (state) => {
       state.failed = false;
@@ -45,3 +50,5 @@ export const devJobsSlice = createSlice({
     });
   },
 });
+
+export const { setLimit } = devJobsSlice.actions;
