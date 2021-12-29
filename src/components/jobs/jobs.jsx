@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDevJobs } from "../../features/devJobsSlice/devJobsSlice";
 import { Link } from "react-router-dom";
+
 export const Jobs = () => {
   const [limit, setLimit] = useState(8);
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const Jobs = () => {
     }, 1000);
     return () => clearTimeout(timer);
   }, [dispatch, limit]);
+  console.log(devJobs, "<-- dev Jobs in jobs");
 
   return (
     <main>
