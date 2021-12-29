@@ -1,40 +1,122 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDevJobs } from "../../features/devJobsSlice/devJobsSlice";
+import { useHistory } from "react-router-dom";
 
 export const Job = ({ match }) => {
   const dispatch = useDispatch();
   const { devJobs, loading, failed, success } = useSelector(
     (state) => state.devJobs
   );
+  const history = useHistory();
+
   console.log(match);
   useEffect(() => {
     dispatch(getDevJobs(`id=${match.params.id}`));
   }, [dispatch, match.params.id]);
   return (
-    <main>
+    <article>
       {success && console.log(devJobs)}
-      {success === true &&
+      {success &&
         devJobs.map((job) => {
           return (
             <div key={job.id}>
-              <div>
-                <span>{job.postedAt} </span>
-                <span>.</span>
-                <span> {job.contract}</span>
+              <div className="container-info-company">
+                <div>
+                  <img src={job.logo} alt="logo company" />
+                </div>
+                <div>
+                  <div>
+                    <h1>{job.company}</h1>
+                    <p>{`${job.company}.com`}</p>
+                  </div>
+                  <div>
+                    <div className="button-anchor">
+                      <a
+                        href={job.website}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Company Site
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p>{job.position}</p>
+              <div className="container-info-job">
+                <div>
+                  <span>{job.postedAt} </span>
+                  <span>.</span>
+                  <span> {job.contract}</span>
+                  <p>{job.position}</p>
+                  <p>{job.location}</p>
+                </div>
+                <div>
+                  <div>
+                    <a
+                      href={job.apply}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Apply Now
+                    </a>
+                  </div>
+                </div>
+                <div>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Nesciunt maiores necessitatibus illo quidem, odio asperiores
+                    numquam ipsum nisi autem neque voluptatem optio sed,
+                    repellendus, reiciendis nobis provident omnis debitis
+                    eligendi. Excepturi iusto hic quibusdam nemo consequatur
+                    nostrum harum nihil ex eos autem officia voluptatem
+                    eligendi, aperiam sunt ipsa dolor laboriosam neque molestiae
+                    totam provident cupiditate error illo iure nobis.
+                    Necessitatibus? Nulla, quo? Voluptate recusandae ipsum
+                    pariatur quidem cum reiciendis! Ducimus numquam impedit
+                    accusantium nobis quaerat culpa doloribus, eos corporis.
+                  </p>
+                </div>
+                <div>
+                  <h2>Requirements</h2>
+                  <p>{job.requirements.content}</p>
+                  {job.requirements.items.map((item, i) => (
+                    <ul>
+                      <li key={i}>{item}</li>
+                    </ul>
+                  ))}
+                </div>
+                <div>
+                  <h2>What You Will Do</h2>
+                  <p>{job.role.content}</p>
+                  {job.role.items.map((item, i) => (
+                    <ul>
+                      <li key={i}>{item}</li>
+                    </ul>
+                  ))}
+                </div>
               </div>
-              <div>
-                <p>{job.company}</p>
-              </div>
-              <div>
-                <p>{job.location}</p>
+              <div className="container-footer">
+                <div>
+                  <h3>{job.position}</h3>
+                  <p>{job.website}</p>
+                </div>
+                <div>
+                  <div>
+                    <a
+                      href={job.apply}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Apply Now
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           );
         })}
-    </main>
+      <button onClick={history.goBack}>Back</button>
+    </article>
   );
 };

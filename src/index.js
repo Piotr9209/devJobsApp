@@ -15,6 +15,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={Jobs} />
           <Route exact path="/id/:id" component={Job} />
+          <Route exact path="/" children={<Jobs />} />
         </Switch>
         {/* <Jobs /> */}
       </Provider>
