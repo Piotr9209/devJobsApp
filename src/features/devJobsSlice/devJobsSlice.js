@@ -1,11 +1,13 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 
 const initialState = {
   devJobs: [],
-  devJob: [],
   loading: true,
   failed: false,
-  success: "loading",
+  success: false,
+  filteredCharacters: "",
+  filterLocationCompany: "",
+  filterFullTimeWork: "",
 };
 
 const url = "http://localhost:8000/job/?";
@@ -30,8 +32,17 @@ export const devJobsSlice = createSlice({
   name: "devJobsSelected",
   initialState,
   reducers: {
-    setLimit: (state, action) => {
-      state.limit = action.payload;
+    setEmptyDevJobs: (state) => {
+      state.devJobs = [];
+    },
+    filterDevJobs: (state, action) => {
+      state.filteredCharacters = action.payload;
+    },
+    setFilterLocationCompany: (state, action) => {
+      state.filterLocationCompany = action.payload;
+    },
+    setFilterFullTimeWork: (state, action) => {
+      state.filterFullTimeWork = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -51,4 +62,9 @@ export const devJobsSlice = createSlice({
   },
 });
 
-export const { setLimit } = devJobsSlice.actions;
+export const {
+  setEmptyDevJobs,
+  filterDevJobs,
+  setFilterFullTimeWork,
+  setFilterLocationCompany,
+} = devJobsSlice.actions;
