@@ -1,19 +1,25 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDevJobs } from "../../features/devJobsSlice/devJobsSlice";
+import { setEmptyDevJobs } from "../../features/devJobsSlice/devJobsSlice";
+import { filterDevJobs } from "../../features/devJobsSlice/devJobsSlice";
 import { useHistory } from "react-router-dom";
 
 export const Job = ({ match }) => {
   const dispatch = useDispatch();
-  const { devJobs, loading, failed, success } = useSelector(
-    (state) => state.devJobs
-  );
+  const { devJobs, success } = useSelector((state) => state.devJobs);
+
   const history = useHistory();
 
-  console.log(match);
+  const handleClickBack = () => {
+    dispatch(filterDevJobs());
+    dispatch(setEmptyDevJobs());
+    history.goBack();
+  };
   useEffect(() => {
     dispatch(getDevJobs(`id=${match.params.id}`));
   }, [dispatch, match.params.id]);
+
   return (
     <article>
       {success && console.log(devJobs)}
@@ -23,7 +29,11 @@ export const Job = ({ match }) => {
             <div key={job.id}>
               <div className="container-info-company">
                 <div>
-                  <img src={job.logo} alt="logo company" />
+                  <img
+                    src={job.logo}
+                    alt="logo company"
+                    style={{ height: "200px", width: "200px" }}
+                  />
                 </div>
                 <div>
                   <div>
@@ -116,7 +126,7 @@ export const Job = ({ match }) => {
             </div>
           );
         })}
-      <button onClick={history.goBack}>Back</button>
+      <button onClick={handleClickBack}>Back</button>
     </article>
   );
 };
