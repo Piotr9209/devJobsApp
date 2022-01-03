@@ -17,7 +17,6 @@ ReactDOM.render(
           <Route exact path="/id/:id" component={Job} />
           <Route exact path="/" children={<Jobs />} />
         </Switch>
-        {/* <Jobs /> */}
       </Provider>
     </Router>
   </React.StrictMode>,
