@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   devJobs: [],
@@ -7,7 +7,7 @@ const initialState = {
   success: false,
   filteredCharacters: "",
   filterLocationCompany: "",
-  filterFullTimeWork: "",
+  filterFullTimeWork: false,
 };
 
 const url = "http://localhost:8000/job/?";
@@ -36,10 +36,18 @@ export const devJobsSlice = createSlice({
       state.devJobs = [];
     },
     filterDevJobs: (state, action) => {
-      state.filteredCharacters = action.payload;
+      if (action.payload.length >= 3) {
+        state.filteredCharacters = action.payload;
+      } else {
+        state.filteredCharacters = "";
+      }
     },
     setFilterLocationCompany: (state, action) => {
-      state.filterLocationCompany = action.payload;
+      if (action.payload.length >= 3) {
+        state.filterLocationCompany = action.payload;
+      } else {
+        state.filterLocationCompany = "";
+      }
     },
     setFilterFullTimeWork: (state, action) => {
       state.filterFullTimeWork = action.payload;
