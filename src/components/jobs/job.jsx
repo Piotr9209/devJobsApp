@@ -12,10 +12,11 @@ export const Job = ({ match }) => {
   const history = useHistory();
 
   const handleClickBack = () => {
-    dispatch(filterDevJobs());
+    dispatch(filterDevJobs(""));
     dispatch(setEmptyDevJobs());
     history.goBack();
   };
+
   useEffect(() => {
     dispatch(getDevJobs(`id=${match.params.id}`));
   }, [dispatch, match.params.id]);
@@ -32,7 +33,11 @@ export const Job = ({ match }) => {
                   <img
                     src={job.logo}
                     alt="logo company"
-                    style={{ height: "200px", width: "200px" }}
+                    style={{
+                      height: "200px",
+                      width: "200px",
+                      backgroundColor: "red",
+                    }}
                   />
                 </div>
                 <div>
@@ -90,20 +95,20 @@ export const Job = ({ match }) => {
                 <div>
                   <h2>Requirements</h2>
                   <p>{job.requirements.content}</p>
-                  {job.requirements.items.map((item, i) => (
-                    <ul>
+                  <ul>
+                    {job.requirements.items.map((item, i) => (
                       <li key={i}>{item}</li>
-                    </ul>
-                  ))}
+                    ))}
+                  </ul>
                 </div>
                 <div>
                   <h2>What You Will Do</h2>
                   <p>{job.role.content}</p>
-                  {job.role.items.map((item, i) => (
-                    <ul>
+                  <ul>
+                    {job.role.items.map((item, i) => (
                       <li key={i}>{item}</li>
-                    </ul>
-                  ))}
+                    ))}
+                  </ul>
                 </div>
               </div>
               <div className="container-footer">

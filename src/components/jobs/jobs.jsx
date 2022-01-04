@@ -20,29 +20,31 @@ export const Jobs = () => {
   const { success } = useSelector((state) => state.devJobs);
 
   const devJobs = useSelector((state) => {
-    const allJobs = state.devJobs.devJobs;
+    let allJobs = state.devJobs.devJobs;
     const filterCharacters = state.devJobs.filteredCharacters;
     const filterLocation = state.devJobs.filterLocationCompany;
     const filterFullTimeWork = state.devJobs.filterFullTimeWork;
-    console.log(state, "<--- state");
+
     if (!filterCharacters && !filterLocation && filterFullTimeWork === false) {
       return allJobs;
     }
+    //TODO: one filter, and next in on filter 3x if logic
     if (filterCharacters) {
-      return allJobs.filter(
+      allJobs = allJobs.filter(
         (job) =>
           job.company.toLowerCase().includes(filterCharacters) ||
           job.position.toLowerCase().includes(filterCharacters)
       );
     }
     if (filterLocation) {
-      return allJobs.filter((job) =>
+      allJobs = allJobs.filter((job) =>
         job.location.toLowerCase().includes(filterLocation)
       );
     }
     if (filterFullTimeWork === true) {
-      return allJobs.filter((job) => job.contract.includes("Full Time"));
+      allJobs = allJobs.filter((job) => job.contract.includes("Full Time"));
     }
+    return allJobs;
   });
 
   const handleChangeQuery = (e) => {
@@ -154,7 +156,11 @@ export const Jobs = () => {
                 <img
                   src={job.logo}
                   alt=""
-                  style={{ height: "200px", width: "200px" }}
+                  style={{
+                    height: "200px",
+                    width: "200px",
+                    backgroundColor: "red",
+                  }}
                 />
               </div>
               <div>

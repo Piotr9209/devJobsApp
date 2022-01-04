@@ -35,6 +35,7 @@ export const devJobsSlice = createSlice({
     setEmptyDevJobs: (state) => {
       state.devJobs = [];
     },
+    //TODO: operator conditional and one filter
     filterDevJobs: (state, action) => {
       if (action.payload.length >= 3) {
         state.filteredCharacters = action.payload;
