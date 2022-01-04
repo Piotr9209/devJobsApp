@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 export const Jobs = () => {
   const [limit, setLimit] = useState(8);
   const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const [checked, setChecked] = useState(false);
   const [hiddenButton, setHiddenButton] = useState(false);
   const [toggleMessage, setToggleMessage] = useState(false);
   const [message, setMessage] = useState(null);
@@ -20,17 +22,32 @@ export const Jobs = () => {
   const devJobs = useSelector((state) => {
     const allJobs = state.devJobs.devJobs;
     const filterCharacters = state.devJobs.filteredCharacters;
-    if (!filterCharacters) {
+    const filterLocation = state.devJobs.filterLocationCompany;
+    const filterFullTimeWork = state.devJobs.filterFullTimeWork;
+    console.log(state, "<--- state");
+    if (!filterCharacters && !filterLocation && filterFullTimeWork === false) {
       return allJobs;
-    } else {
-      return allJobs.filter((job) => job.company.includes(filterCharacters));
+    }
+    if (filterCharacters) {
+      return allJobs.filter(
+        (job) =>
+          job.company.toLowerCase().includes(filterCharacters) ||
+          job.position.toLowerCase().includes(filterCharacters)
+      );
+    }
+    if (filterLocation) {
+      return allJobs.filter((job) =>
+        job.location.toLowerCase().includes(filterLocation)
+      );
+    }
+    if (filterFullTimeWork === true) {
+      return allJobs.filter((job) => job.contract.includes("Full Time"));
     }
   });
 
-  const onChangeQuery = (e) => {
+  const handleChangeQuery = (e) => {
     setQuery(e.target.value);
-    const newQuery = e.target.value;
-    console.log(newQuery);
+    const newQuery = e.target.value.toLowerCase().trim();
     if (newQuery.length === 0) {
       setToggleMessage(false);
       setMessage(null);
@@ -48,9 +65,38 @@ export const Jobs = () => {
     }
   };
 
+  const handleChangeLocation = (e) => {
+    setLocation(e.target.value);
+    const newLocation = e.target.value.toLowerCase().trim();
+    if (newLocation.length === 0) {
+      setToggleMessage(false);
+      setMessage(null);
+      setHiddenButton(false);
+      dispatch(setFilterLocationCompany(newLocation));
+    } else if (newLocation.length < 3) {
+      setToggleMessage(true);
+      setMessage("too small characters");
+      dispatch(setFilterLocationCompany(newLocation));
+    } else {
+      setToggleMessage(false);
+      setMessage(null);
+      setHiddenButton(true);
+      dispatch(setFilterLocationCompany(newLocation));
+    }
+  };
+  const handleChangeChecked = () => {
+    setChecked(!checked);
+    dispatch(setFilterFullTimeWork(!checked));
+    setHiddenButton(false);
+    if (checked === true) {
+      setHiddenButton(true);
+    }
+  };
+
   const loadMore = () => {
     setLimit(limit + 8);
     dispatch(getDevJobs(`_limit=${limit}`));
+    console.log(devJobs, "<--- devJobs");
   };
 
   useEffect(() => {
@@ -65,16 +111,39 @@ export const Jobs = () => {
       <nav>
         <div>
           <div>
-            <input
-              type="text"
-              value={query}
-              onChange={onChangeQuery}
-              placeholder="Filter by title, companies, expertise..."
-            />
-            <p>{toggleMessage && message}</p>
+            <label htmlFor="filteredQuery">
+              <input
+                type="text"
+                id="filteredQuery"
+                value={query}
+                onChange={handleChangeQuery}
+                placeholder="Filter by title or name companies"
+              />
+            </label>
           </div>
-          <div></div>
-          <div></div>
+          <div>
+            <label htmlFor="filteredLocation">
+              <input
+                type="text"
+                id="filteredLocation"
+                value={location}
+                onChange={handleChangeLocation}
+                placeholder="Filter by location..."
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="checkFullTime">
+              <input
+                type="checkbox"
+                id="checkFullTime"
+                defaultChecked={checked}
+                onChange={handleChangeChecked}
+              />
+              Full Time Only
+            </label>
+          </div>
+          <p>{toggleMessage && message}</p>
         </div>
       </nav>
       {success === true &&
