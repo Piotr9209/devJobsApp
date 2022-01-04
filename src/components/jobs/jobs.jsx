@@ -51,6 +51,7 @@ export const Jobs = () => {
   const loadMore = () => {
     setLimit(limit + 8);
     dispatch(getDevJobs(`_limit=${limit}`));
+    console.log(devJobs, "<--- devJobs");
   };
 
   useEffect(() => {
