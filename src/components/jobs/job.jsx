@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDevJobs } from "../../features/devJobsSlice/devJobsSlice";
 import { setEmptyDevJobs } from "../../features/devJobsSlice/devJobsSlice";
 import { filterDevJobs } from "../../features/devJobsSlice/devJobsSlice";
+import { setFilterLocationCompany } from "../../features/devJobsSlice/devJobsSlice";
 import { useHistory } from "react-router-dom";
 
 export const Job = ({ match }) => {
@@ -13,6 +14,7 @@ export const Job = ({ match }) => {
 
   const handleClickBack = () => {
     dispatch(filterDevJobs(""));
+    dispatch(setFilterLocationCompany(""));
     dispatch(setEmptyDevJobs());
     history.goBack();
   };

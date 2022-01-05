@@ -1,4 +1,5 @@
 import React from "react";
+import { setToggleTheme } from "../../features/devJobsSlice/devJobsSlice";
 import "./header.scss";
 
 export const Header = () => {

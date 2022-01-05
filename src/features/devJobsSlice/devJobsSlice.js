@@ -5,6 +5,7 @@ const initialState = {
   loading: true,
   failed: false,
   success: false,
+  toggleTheme: false,
   filteredCharacters: "",
   filterLocationCompany: "",
   filterFullTimeWork: false,
@@ -32,23 +33,21 @@ export const devJobsSlice = createSlice({
   name: "devJobsSelected",
   initialState,
   reducers: {
+    setToggleTheme: (state) => {
+      state.toggleTheme = !state.toggleTheme;
+    },
     setEmptyDevJobs: (state) => {
       state.devJobs = [];
     },
-    //TODO: operator conditional and one filter
     filterDevJobs: (state, action) => {
-      if (action.payload.length >= 3) {
-        state.filteredCharacters = action.payload;
-      } else {
-        state.filteredCharacters = "";
-      }
+      action.payload.length >= 3
+        ? (state.filteredCharacters = action.payload)
+        : (state.filteredCharacters = "");
     },
     setFilterLocationCompany: (state, action) => {
-      if (action.payload.length >= 3) {
-        state.filterLocationCompany = action.payload;
-      } else {
-        state.filterLocationCompany = "";
-      }
+      action.payload.length >= 3
+        ? (state.filterLocationCompany = action.payload)
+        : (state.filterLocationCompany = "");
     },
     setFilterFullTimeWork: (state, action) => {
       state.filterFullTimeWork = action.payload;
@@ -72,6 +71,7 @@ export const devJobsSlice = createSlice({
 });
 
 export const {
+  setToggleTheme,
   setEmptyDevJobs,
   filterDevJobs,
   setFilterFullTimeWork,

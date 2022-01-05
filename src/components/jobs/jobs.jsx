@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDevJobs } from "../../features/devJobsSlice/devJobsSlice";
 import { filterDevJobs } from "../../features/devJobsSlice/devJobsSlice";
-import { setFilterFullTimeWork } from "../../features/devJobsSlice/devJobsSlice";
 import { setFilterLocationCompany } from "../../features/devJobsSlice/devJobsSlice";
+import { setFilterFullTimeWork } from "../../features/devJobsSlice/devJobsSlice";
 import { Link } from "react-router-dom";
 
 export const Jobs = () => {
@@ -183,7 +183,7 @@ export const Jobs = () => {
         })}
       <button
         onClick={() => loadMore()}
-        disabled={devJobs.length === 30 || hiddenButton}
+        disabled={devJobs.length > 28 || hiddenButton}
       >
         {" "}
         load more

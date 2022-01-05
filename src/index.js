@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import { Header } from "./components/header/Header";
 import { Jobs } from "./components/jobs/Jobs";
 import { Job } from "./components/jobs/Job";
 import { Provider } from "react-redux";
@@ -11,7 +11,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Provider store={store}>
-        <App />
+        <Header />
         <Switch>
           <Route exact path="/" component={Jobs} />
           <Route exact path="/id/:id" component={Job} />
