@@ -24,25 +24,26 @@ export const Jobs = () => {
     const filterCharacters = state.devJobs.filteredCharacters;
     const filterLocation = state.devJobs.filterLocationCompany;
     const filterFullTimeWork = state.devJobs.filterFullTimeWork;
-    console.log(state, "<--- state");
+
     if (!filterCharacters && !filterLocation && filterFullTimeWork === false) {
       return allJobs;
     }
     if (filterCharacters) {
-      return allJobs.filter(
+      allJobs.filter(
         (job) =>
           job.company.toLowerCase().includes(filterCharacters) ||
           job.position.toLowerCase().includes(filterCharacters)
       );
     }
     if (filterLocation) {
-      return allJobs.filter((job) =>
+      allJobs.filter((job) =>
         job.location.toLowerCase().includes(filterLocation)
       );
     }
     if (filterFullTimeWork === true) {
-      return allJobs.filter((job) => job.contract.includes("Full Time"));
+      allJobs.filter((job) => job.contract.includes("Full Time"));
     }
+    return allJobs;
   });
 
   const handleChangeQuery = (e) => {
